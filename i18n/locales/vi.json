@@ -1,0 +1,19 @@
+{
+  "login": {
+    "title": "Đăng nhập",
+    "email": "Email đăng ký",
+    "password": "Mật khẩu",
+    "button": "Đăng nhập"
+  },
+  "welcome": "Xin chào",
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "contact": "Liên hệ"
+  },
+  "form": {
+    "name": "Họ và tên",
+    "email": "Địa chỉ email",
+    "submit": "Gửi"
+  }
+}

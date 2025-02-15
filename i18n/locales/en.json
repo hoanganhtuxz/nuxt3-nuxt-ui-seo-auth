@@ -1,0 +1,20 @@
+{
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login"
+  },
+  
+  "welcome": "hello",
+  "nav": {
+    "home": "home",
+    "about": "about",
+    "contact": "contact"
+  },
+  "form": {
+    "name": "name",
+    "email": "email",
+    "submit": "submit"
+  }
+}
