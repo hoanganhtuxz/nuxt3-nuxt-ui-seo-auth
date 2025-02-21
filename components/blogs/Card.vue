@@ -4,7 +4,6 @@ import type { Blog } from "~~/types/blog";
 interface Props {
   blog: Blog;
 }
-
 withDefaults(defineProps<Props>(), {
   blog: () => ({
     id: 0,
@@ -17,15 +16,19 @@ withDefaults(defineProps<Props>(), {
     tags: [],
   }),
 });
+const { currentLocale } = useLocale();
 </script>
 
 <template>
   <article class="border rounded-lg p-4">
-    <NuxtLink :to="`/blog/${blog.id}`">
-      <img
+    <NuxtLink :to="`/${currentLocale}/blog/${blog.id}`">
+      <nuxt-img
         :src="blog.image"
         :alt="blog.title"
         class="w-full h-48 object-cover rounded"
+        format="webp"
+        loading="lazy"
+        placeholder
       />
       <h2 class="text-xl font-bold mt-2">{{ blog.title }}</h2>
       <p class="text-gray-600">{{ blog.description }}</p>

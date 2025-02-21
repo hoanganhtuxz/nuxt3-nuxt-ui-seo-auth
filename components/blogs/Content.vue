@@ -4,8 +4,8 @@ import type { Blog } from '~~/types/blog'
 interface Props {
   blog: Blog
 }
-
 defineProps<Props>()
+
 </script>
 
 <template>

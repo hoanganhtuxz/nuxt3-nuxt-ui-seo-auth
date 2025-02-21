@@ -1,14 +1,16 @@
-import { defineEventHandler, getQuery } from "h3";
+import { defineEventHandler, getCookie } from "h3";
 import { fetchConfig } from "~/server/utils/configApi";
 
 export default defineEventHandler((event) => {
-  const query = getQuery(event);
   try {
-    const data = fetchConfig.get("/blogs", event, query);
+    const data = fetchConfig.get(
+      "https://api.mindmaid.ai/api/get-info-user",
+      event
+    );
     if (!data) {
       throw createError({
         statusCode: 404,
-        message: "Không tìm thấy danh sách blog",
+        message: "Không tìm thấy thông tin người dùng",
       });
     }
     return data;

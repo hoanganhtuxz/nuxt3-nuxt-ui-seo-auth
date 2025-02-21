@@ -1,9 +1,21 @@
 {
-  "login": {
+  "signin": {
     "title": "Đăng nhập",
-    "email": "Email đăng ký",
+    "description": "Chào mừng trở lại! Vui lòng nhập thông tin của bạn",
+    "email": "Địa chỉ email",
+    "emailPlaceholder": "Nhập email của bạn",
     "password": "Mật khẩu",
-    "button": "Đăng nhập"
+    "passwordPlaceholder": "Nhập mật khẩu của bạn",
+    "rememberMe": "Ghi nhớ đăng nhập",
+    "forgotPassword": "Quên mật khẩu?",
+    "submit": "Đăng nhập",
+    "errors": {
+      "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+      "passwordTooShort": "Mật khẩu phải có ít nhất 6 ký tự",
+      "invalidCredentials": "Email hoặc mật khẩu không hợp lệ"
+    },
+    "metaTitle": "Đăng nhập - Nuxt 3 UI",
+    "metaDescription": "Đăng nhập để truy cập tài khoản và quản lý cài đặt của bạn"
   },
   "welcome": "Xin chào",
   "nav": {

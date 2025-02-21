@@ -1,16 +1,30 @@
-import { defineEventHandler, getRouterParam } from "h3";
-import type { Blog } from "~~/types/blog";
+import { defineEventHandler } from "h3";
+import { fetchConfig } from "~/server/utils/configApi";
 
-export default defineEventHandler(async (event): Promise<Blog> => {
-  const id = getRouterParam(event, 'id')
-  return {
-    id: Number(id),
-    title: "Getting Started with Nuxt 3",
-    description: "Learn how to build modern web applications with Nuxt 3",
-    content: "Full content here...",
-    image: "/blog/nuxt3.jpg",
-    author: "John Doe",
-    publishDate: "2024-02-14",
-    tags: ["Nuxt", "Vue", "JavaScript"],
-  };
+export default defineEventHandler(async (event) => {
+  const id = event.context.params?.id;
+
+  if (!id) {
+    throw createError({
+      statusCode: 400,
+      message: "ID blog là bắt buộc",
+    });
+  }
+
+  try {
+    const blog = await fetchConfig.get(`/blogs/${id}`, event);
+    if (!blog) {
+      throw createError({
+        statusCode: 404,
+        message: "Không tìm thấy blog",
+      });
+    }
+    return blog;
+  } catch (error: any) {
+    console.error(`Failed to fetch blog ${id}:`, error);
+    throw createError({
+      statusCode: error.response?.status || 500,
+      message: error.message || "Không thể lấy thông tin blog",
+    });
+  }
 });

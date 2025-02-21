@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   // css: ["~/assets/css/main.css"],
   app: {
+    // seo
     head: {
       htmlAttrs: {
         lang: "vi",
@@ -38,95 +39,70 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
   },
-  modules: [
-    // Cấu hình robots
-    [
-      "@nuxtjs/robots",
-      {
+  modules: [// Cấu hình robots
+  [
+    "nuxt-simple-sitemap",
+    {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+      generateOnBuild: true,
+      robots: true, // Kích hoạt tạo robots.txt
+      robotsConfig: {
         UserAgent: "*",
         Allow: "/",
-        Sitemap: (ctx: { defaultSiteUrl: string }) =>
-          `${ctx.defaultSiteUrl}/sitemap.xml`,
       },
-    ],
-    [
-      "nuxt-simple-sitemap",
-      {
-        siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
-        generateOnBuild: true,
-      },
-    ],
-    [
-      "@nuxtjs/i18n",
-      {
-        baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
-        locales: [
-          { code: "vi", iso: "vi-VN", name: "VN", file: "vi.json" },
-          { code: "en", iso: "en-US", name: "EN", file: "en.json" },
-        ],
-        defaultLocale: "vi",
-        strategy: "prefix",
-        detectBrowserLanguage: {
-          useCookie: true,
-          cookieKey: "i18n_redirected",
-          alwaysRedirect: true,
-          fallbackLocale: "vi",
-        },
-        lazy: true,
-        langDir: "locales/",
-        sync: false,
-      },
-    ],
-    
-    "@nuxtjs/tailwindcss", // tailwind css
-   
-  ],
-
-  tailwindcss: {
-    cssPath: ['~/assets/css/main.css', { injectPosition: "first" }],
-    viewer: true,
-    exposeConfig: false,
-    config: {
-      content: [
-        "./components/**/*.{js,vue,ts}",
-        "./layouts/**/*.vue",
-        "./pages/**/*.vue",
-        "./plugins/**/*.{js,ts}",
-        "./app.vue",
-        "./error.vue",
-      ],
     },
-  },
+  ], // cấu hình đa ngữ
+  [
+    "@nuxtjs/i18n",
+    {
+      baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+      locales: [
+        { code: "vi", iso: "vi-VN", name: "Tiếng việt", file: "vi.json" },
+        { code: "en", iso: "en-US", name: "English", file: "en.json" },
+      ],
+      defaultLocale: "vi",
+      strategy: "prefix", // or 'prefix_and_default'
+      detectBrowserLanguage: {
+        useCookie: true,
+        cookieKey: "i18n_redirected",
+        alwaysRedirect: true,
+        fallbackLocale: "vi",
+        redirectOn: "root",
+      },
+      lazy: true,
+      langDir: "locales/",
+      // sync: true, or false
+      // seo: true, or false
+    },
+  ], // nuxt ui
+  [
+    "@nuxt/ui",
+    {
+      global: true,
+    },
+  ], // pinia
+  "@pinia/nuxt", "@nuxt/image"],
 
   runtimeConfig: {
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+      apiUrl: process.env.NUXT_API_URL || "http://localhost:3000",
     },
   },
   // srcDir: "/",
   typescript: {
     strict: true,
     typeCheck: true,
-    tsConfig: {
-      compilerOptions: {
-        moduleResolution: "Bundler",
-        target: "ESNext",
-        module: "ESNext",
-      },
-    },
   },
   nitro: {
     routeRules: {
       "/api/**": { cors: true },
-      "/**": { ssr: true },
+      "/**": { ssr: true }, 
     },
   },
 
   // Components auto-import
   components: {
-    dirs: [
-      "~/components",
-      // '~/components/blogs'
-    ],
+    dirs: ["~/components"],
   },
 });

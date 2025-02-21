@@ -1,11 +1,22 @@
 {
-  "login": {
-    "title": "Login",
-    "email": "Email",
+  "signin": {
+    "title": "Sign in to your account",
+    "description": "Welcome back! Please enter your details",
+    "email": "Email address",
+    "emailPlaceholder": "Enter your email",
     "password": "Password",
-    "button": "Login"
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "submit": "Sign in",
+    "errors": {
+      "invalidEmail": "Please enter a valid email address",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "invalidCredentials": "Invalid email or password"
+    },
+    "metaTitle": "Sign in - Your App Name",
+    "metaDescription": "Sign in to access your account and manage your settings"
   },
-  
   "welcome": "hello",
   "nav": {
     "home": "home",

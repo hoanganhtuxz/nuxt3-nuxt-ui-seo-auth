@@ -1,63 +1,55 @@
 <script setup lang="ts">
-import BlogContent from "~~/components/blogs/BlogContent.vue";
+import { ContentType } from "~/types/seo";
 import type { Blog } from "~~/types/blog";
 
-const route = useRoute()
-const { data: blog } = await useFetch<Blog>(`/api/blogs/${route.params.id}`)
+// definePageMeta({
+//   middleware: ['auth'],
+//   auth: { required: true, checkId: true }
+// })
+const config = useRuntimeConfig();
+const origin = config.public.siteUrl;
+const route = useRoute();
 
-// SEO configuration
-useHead(() => ({
-  title: blog.value?.title,
-  meta: [
-    {
-      name: "description",
-      content: blog.value?.description,
-    },
-    // Open Graph
-    {
-      property: "og:type",
-      content: "article",
-    },
-    {
-      property: "og:title",
-      content: blog.value?.title,
-    },
-    {
-      property: "og:description",
-      content: blog.value?.description,
-    },
-    {
-      property: "og:image",
-      content: blog.value?.image,
-    },
-    {
-      property: "article:published_time",
-      content: blog.value?.publishDate,
-    },
+const { data: blog, error } = await useFetch<Blog>(
+  `/api/blogs/${route.params.id}`
+);
+
+if (error.value) {
+  console.error("Error fetching blog:", error.value);
+}
+
+const blogData = blog.value as Blog;
+
+useSeo({
+  title: blogData.title || "Blog Article",
+  description:
+    blogData.description ||
+    blogData.content?.replace(/<[^>]*>/g, "").substring(0, 157) + "...",
+  image: blogData.image
+    ? {
+        url: blogData.image.startsWith("http")
+          ? blogData.image
+          : `${origin}/${blogData.image}`,
+        alt: blogData.title,
+      }
+    : undefined,
+  type: ContentType.Article,
+  publishedTime:
+    blogData.publishDate && new Date(blogData.publishDate).toISOString(),
+  breadcrumb: [
+    { name: "Home", url: "/" },
+    { name: "Blogs", url: "/blogs" },
+    { name: blogData.title || "Blog Detail", url: route.fullPath },
   ],
-  // Schema.org markup
-  script: [
-    {
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: blog.value?.title,
-        description: blog.value?.description,
-        image: blog.value?.image,
-        datePublished: blog.value?.publishDate,
-        author: {
-          "@type": "Person",
-          name: blog.value?.author,
-        },
-      }),
-    },
-  ],
-}));
+  canonicalUrl: `${origin}${route.fullPath}`,
+});
 </script>
 
 <template>
-  <main class="max-w-4xl mx-auto px-4 py-8">
-    <BlogContent v-if="blog" :blog="blog" />
-  </main>
+  <div v-if="!blog" class="flex justify-center py-8">
+    <p>Đanh tải...</p>
+  </div>
+  <div v-else class="max-w-4xl mx-auto px-4 py-8">
+    <BlogsContent v-if="blog" :blog="blog" />
+  </div>
 </template>

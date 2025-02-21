@@ -10,16 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/image": "^1.9.0",
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@nuxtjs/robots": "^5.2.2",
-    "@nuxtjs/tailwindcss": "npm:@nuxtjs/tailwindcss@nightly",
     "@pinia/nuxt": "^0.10.1",
     "nuxt": "^3.15.4",
     "nuxt-simple-sitemap": "^4.4.1",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@nuxt/ui": "^2.21.0",
+    "nuxt-icon": "^1.0.0-beta.7",
+    "tailwindcss": "^3.4.17",
     "vue-tsc": "^2.1.10"
   }
 }

@@ -1,9 +1,6 @@
-// composables/useCustomRouter.ts
-
 export const useCustomRouter = () => {
   const router = useRouter();
   const localePath = useLocalePath();
-  console.log('localePath',localePath)
   const route = useRoute();
 
   // Chuyển hướng với locale
