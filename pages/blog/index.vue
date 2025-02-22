@@ -33,16 +33,13 @@ useHead({
 <template>
   <div class="max-w-7xl mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-8">Blogs page</h1>
-
-    <!-- Loading state -->
-    <div v-if="!blogs" class="flex justify-center py-8">
-      <p>Đang tải...</p>
-    </div>
-
-    <!-- Content -->
-    <div v-else class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <template v-if="error">
+      <p class="text-red-500">⚠️ Error loading blogs: {{ error.message }}</p>
+    </template>
+    <div v-if="blogs" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <BlogsCard v-for="blog in blogs" :key="blog.id" :blog="blog" />
     </div>
+    <UiSkeletonList v-else />
   </div>
 </template>
 

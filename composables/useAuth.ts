@@ -23,7 +23,7 @@ export function useAuth() {
   //   return data.value;
   // };
 
-   const login = async (payload: LoginReq) => {
+  const login = async (payload: LoginReq) => {
     try {
       const response = await $fetch<LoginRes>("/api/auth/login", {
         method: "POST",
@@ -43,17 +43,9 @@ export function useAuth() {
   // 🔹 Lấy thông tin người dùng
   const getUserInfo = async () => {
     if (!accessToken.value || user.value) return null;
-
-    const response = await $fetch<User>("/api/auth/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken.value}`,
-      },
-    });
-
-
-
+    const response = await $fetch<User>("/api/auth/me",);
     if (response) {
-      user.value = response
+      user.value = response;
     }
 
     return user.value;

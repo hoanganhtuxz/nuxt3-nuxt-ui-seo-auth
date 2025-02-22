@@ -6,12 +6,15 @@ export const HeaderMenu: MenuItem[] = [
     label: "Trang chủ",
     to: "/",
     icon: "i-heroicons-home",
+    auth: false,
+
   },
   {
     id: "products",
     label: "Sản phẩm",
     to: "/products",
     icon: "i-heroicons-users",
+    auth: true,
   },
   // {
   //   id: "products",
@@ -40,5 +43,7 @@ export const HeaderMenu: MenuItem[] = [
     label: "Bài viết",
     to: "/blog",
     icon: "i-heroicons-users",
+    auth: false,
+
   },
 ];

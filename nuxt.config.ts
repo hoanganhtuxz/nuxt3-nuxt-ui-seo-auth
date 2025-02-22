@@ -39,49 +39,52 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
   },
-  modules: [// Cấu hình robots
-  [
-    "nuxt-simple-sitemap",
-    {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
-      generateOnBuild: true,
-      robots: true, // Kích hoạt tạo robots.txt
-      robotsConfig: {
-        UserAgent: "*",
-        Allow: "/",
+  modules: [
+    // Cấu hình robots
+    [
+      "nuxt-simple-sitemap",
+      {
+        siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+        generateOnBuild: true,
+        robots: true, // Kích hoạt tạo robots.txt
+        robotsConfig: {
+          UserAgent: "*",
+          Allow: "/",
+        },
       },
-    },
-  ], // cấu hình đa ngữ
-  [
-    "@nuxtjs/i18n",
-    {
-      baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
-      locales: [
-        { code: "vi", iso: "vi-VN", name: "Tiếng việt", file: "vi.json" },
-        { code: "en", iso: "en-US", name: "English", file: "en.json" },
-      ],
-      defaultLocale: "vi",
-      strategy: "prefix", // or 'prefix_and_default'
-      detectBrowserLanguage: {
-        useCookie: true,
-        cookieKey: "i18n_redirected",
-        alwaysRedirect: true,
-        fallbackLocale: "vi",
-        redirectOn: "root",
+    ], // cấu hình đa ngữ
+    [
+      "@nuxtjs/i18n",
+      {
+        baseUrl: process.env.NUXT_PUBLIC_SITE_URL || "http://localhost:3000",
+        locales: [
+          { code: "vi", iso: "vi-VN", name: "Tiếng việt", file: "vi.json" },
+          { code: "en", iso: "en-US", name: "English", file: "en.json" },
+        ],
+        defaultLocale: "vi",
+        strategy: "prefix", // or 'prefix_and_default'
+        detectBrowserLanguage: {
+          useCookie: true,
+          cookieKey: "i18n_redirected",
+          alwaysRedirect: true,
+          fallbackLocale: "vi",
+          redirectOn: "root",
+        },
+        lazy: true,
+        langDir: "locales/",
+        // sync: true, or false
+        // seo: true, or false
       },
-      lazy: true,
-      langDir: "locales/",
-      // sync: true, or false
-      // seo: true, or false
-    },
-  ], // nuxt ui
-  [
-    "@nuxt/ui",
-    {
-      global: true,
-    },
-  ], // pinia
-  "@pinia/nuxt", "@nuxt/image"],
+    ], // nuxt ui
+    [
+      "@nuxt/ui",
+      {
+        global: true,
+      },
+    ], // pinia
+    "@pinia/nuxt",
+    "@nuxt/image",
+  ],
 
   runtimeConfig: {
     public: {
@@ -97,12 +100,12 @@ export default defineNuxtConfig({
   nitro: {
     routeRules: {
       "/api/**": { cors: true },
-      "/**": { ssr: true }, 
+      "/**": { ssr: true },
     },
   },
 
   // Components auto-import
   components: {
-    dirs: ["~/components"],
+    dirs: ["~/components", "~/components/ui"],
   },
 });

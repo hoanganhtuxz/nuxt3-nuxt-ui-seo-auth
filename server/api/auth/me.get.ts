@@ -1,11 +1,12 @@
-import { defineEventHandler, getCookie } from "h3";
+import { defineEventHandler } from "h3";
 import { fetchConfig } from "~/server/utils/configApi";
 
 export default defineEventHandler((event) => {
   try {
     const data = fetchConfig.get(
       "https://api.mindmaid.ai/api/get-info-user",
-      event
+      event,
+      { auth: true }
     );
     if (!data) {
       throw createError({

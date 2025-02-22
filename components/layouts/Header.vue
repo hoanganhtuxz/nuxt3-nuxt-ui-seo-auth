@@ -1,4 +1,7 @@
 <template>
+<ClientOnly>
+  <template #fallback>  <div>Loading...</div></template>
+  
   <header :class="['w-full', sticky ? 'sticky top-0 z-50' : '']">
     <div class="container mx-auto px-4">
       <!-- Desktop header -->
@@ -12,7 +15,7 @@
         <!-- Desktop Menu -->
         <LayoutsMenu
           v-model="activeMenuId"
-          :menu-items="HeaderMenu"
+          :menu-items="filteredMenuItems"
           @item-click="handleMenuItemClick"
         >
           <template #extra-nav-items>
@@ -85,6 +88,7 @@
       </div>
     </USlideover>
   </header>
+</ClientOnly>
 </template>
 
 <script lang="ts" setup>
@@ -124,6 +128,24 @@ const activeMenuId = computed({
   set: (value: any) => emit("update:modelValue", value),
 });
 
+const auth = useAuth();
+
+// Computed property để lọc menu dựa trên trạng thái đăng nhập
+const filteredMenuItems = computed(() => {
+  // Kiểm tra người dùng đã đăng nhập chưa
+  const isUserLoggedIn = auth.isAuthenticated.value;
+  
+  // Nếu chưa đăng nhập, loại bỏ các item có auth=true
+  // Nếu đã đăng nhập, hiển thị tất cả các item
+  return HeaderMenu.filter((item) => {
+    // Loại bỏ các item có auth=true nếu người dùng chưa đăng nhập
+    if (item.auth === true && !isUserLoggedIn) {
+      return false;
+    }
+    return true;
+  });
+});
+
 // Open mobile menu
 const openMobileMenu = (): void => {
   isMobileMenuOpen.value = true;
@@ -135,14 +157,6 @@ const handleMenuItemClick = (item: MenuItem): void => {
   emit("item-click", item);
 };
 
-// Auth handlers
-const handleLogin = (): void => {
-  emit("login");
-};
-
-const handleProfile = (): void => {
-  emit("profile");
-};
 </script>
 
 <style scoped>

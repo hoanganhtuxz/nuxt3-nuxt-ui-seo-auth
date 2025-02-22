@@ -5,6 +5,7 @@ export interface MenuItem {
   path?: string;
   route?: string;
   href?: string;
+  auth?: boolean;
   target?: string;
   icon?: string;
   children?: MenuItem[];

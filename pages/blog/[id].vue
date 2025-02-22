@@ -46,10 +46,16 @@ useSeo({
 </script>
 
 <template>
-  <div v-if="!blog" class="flex justify-center py-8">
-    <p>Đanh tải...</p>
-  </div>
-  <div v-else class="max-w-4xl mx-auto px-4 py-8">
-    <BlogsContent v-if="blog" :blog="blog" />
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <template v-if="error">
+      <p class="text-red-500">⚠️ Error loading blogs: {{ error.message }}</p>
+    </template>
+    <div v-if="!blog" class="flex justify-center py-8">
+      <p>Đanh tải...</p>
+    </div>
+    <template v-if="blog">
+      <BlogsContent :blog="blog" />
+      <BlogsComment :blogId="blog.id" />
+    </template>
   </div>
 </template>
