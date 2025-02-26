@@ -12,7 +12,7 @@ export const HeaderMenu: MenuItem[] = [
   {
     id: "products",
     label: "Sản phẩm",
-    to: "/products",
+    to: "/product",
     icon: "i-heroicons-users",
     auth: true,
   },
