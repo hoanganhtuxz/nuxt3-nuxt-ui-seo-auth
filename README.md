@@ -1,5 +1,7 @@
 # Nuxt Minimal Starter
 
+**Tài khoản login**: diepxinh@gmail.com/hat260301
+
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
